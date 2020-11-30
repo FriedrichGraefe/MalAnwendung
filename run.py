@@ -13,8 +13,16 @@ def home():
     return render_template("start.html")
 
 @app.route("/gallery")
-def galley():
+def gallery():
     return render_template("gallery.html")
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!', 'success')
+        return redirect(url_for('home'))
+    return render_template('register.html', title='Register', form=form)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
